@@ -9,6 +9,8 @@
   	<module>wgjc_service</module>
   	<module>wgjc_dao</module>
   	<module>wgjc_entity</module>
+  	<module>wgjc_util</module>
+  	<module>wgjc_interceptor</module>
   </modules>
   
   <parent>
