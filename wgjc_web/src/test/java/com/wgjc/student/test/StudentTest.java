@@ -2,26 +2,23 @@ package com.wgjc.student.test;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.github.pagehelper.PageHelper;
 import com.wgjc.SpringbootWgjcApplication;
-import com.wgjc.base.entity.PageRequest;
-import com.wgjc.base.entity.PageResult;
-import com.wgjc.base.util.PageUtils;
+import com.wgjc.page.entity.PageRequest;
+import com.wgjc.page.entity.PageResult;
+import com.wgjc.page.util.PageUtils;
 import com.wgjc.test.controller.StudentController;
-import com.wgjc.test.dao.StudentMapper;
 import com.wgjc.test.entity.Student;
 import com.wgjc.test.service.StudentService;
 
@@ -38,6 +35,13 @@ public class StudentTest {
 	@Autowired
 	private StudentController  controller;
 	
+	@Autowired
+	private PageUtils pageUtils;
+	
+	@Autowired
+	@Qualifier("getDefaultPageRequest")
+	PageRequest pageRequest;
+	
 	@Test
 	public void test() {
 		System.out.println(studentService.getAllStudents());
@@ -53,10 +57,11 @@ public class StudentTest {
 	
 	@Test
 	public void getPageStudent() {
-		PageRequest pageRequest = new PageRequest();
-		pageRequest.setPageNum(1);
-		pageRequest.setPageSize(2);
-		PageResult result = PageUtils.getPageResult(studentService.getPageInfo(pageRequest));
+		/*
+		 * PageRequest pageRequest = new PageRequest(); pageRequest.setPageNum(1);
+		 * pageRequest.setPageSize(2);
+		 */
+		PageResult result = pageUtils.getPageResult(studentService.getPageInfo(pageRequest));
 		System.out.println(result.toString());
 	}
 	

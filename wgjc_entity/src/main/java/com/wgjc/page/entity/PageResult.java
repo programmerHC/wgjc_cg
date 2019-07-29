@@ -1,4 +1,4 @@
-package com.wgjc.base.entity;
+package com.wgjc.page.entity;
 
 import java.util.List;
 
@@ -67,9 +67,10 @@ public class PageResult {
 	public String toString() {
 		String result = "PageResult [pageNum=" + pageNum + ", pageSize=" + pageSize + ", totalSize=" + totalSize
 				+ ", totalPages=" + totalPages  + ", content=";
-		
-		for(Object target:content) {
-			result += target.toString();
+		if(content != null && content.size() > 0) {
+			for(Object target:content) {
+				result += target.toString();
+			}
 		}
 				
 		result += "]";

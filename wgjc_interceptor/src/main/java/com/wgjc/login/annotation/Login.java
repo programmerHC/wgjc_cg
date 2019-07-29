@@ -17,5 +17,5 @@ import java.lang.annotation.Target;
 @Retention(RUNTIME)
 @Target({ TYPE, METHOD })
 public @interface Login {
-
+	String desc() default "验证是否登录";
 }

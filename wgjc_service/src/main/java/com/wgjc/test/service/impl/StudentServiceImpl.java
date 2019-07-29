@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.wgjc.base.entity.PageRequest;
+import com.wgjc.page.entity.PageRequest;
 import com.wgjc.test.dao.StudentMapper;
 import com.wgjc.test.entity.Student;
 import com.wgjc.test.service.StudentService;
