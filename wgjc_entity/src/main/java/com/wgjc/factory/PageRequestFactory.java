@@ -13,13 +13,20 @@ import com.wgjc.page.entity.PageRequest;
  */
 @Configuration
 public class PageRequestFactory {
-	@Bean(name="pageRequest")
-	public PageRequest getPageRequest() {
+	@Bean(name = "pageRequest")
+	public static PageRequest getPageRequest() {
 		return new PageRequest();
 	}
 	
-	@Bean(name="defaultPageRequest")
-	public PageRequest getDefaultPageRequest(@Value("1")int pageNum,@Value("20")int pageSize) {
+	/**
+	 * @Title: getDefaultPageRequest  
+	 * @Description: 默认初始化为第一页页，页面查询数量为20条 
+	 * @param pageNum 页数
+	 * @param pageSize 查询数量
+	 * @return
+	 */
+	@Bean(name = "defaultPageRequest")
+	public static PageRequest getDefaultPageRequest(@Value("1")int pageNum,@Value("20")int pageSize) {
 		return new PageRequest(pageNum, pageSize);
 	}
 }

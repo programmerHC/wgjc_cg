@@ -15,7 +15,7 @@ public class PageUtils {
 	 
 	/**
 	 * @Title: getPageResult  
-	 * @Description: TODO 
+	 * @Description: 封装page内容
 	 * @param pageRequest
 	 * @param pageInfo
 	 * @return

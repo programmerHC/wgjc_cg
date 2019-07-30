@@ -39,7 +39,7 @@ public class StudentTest {
 	private PageUtils pageUtils;
 	
 	@Autowired
-	@Qualifier("getDefaultPageRequest")
+	@Qualifier("defaultPageRequest")
 	PageRequest pageRequest;
 	
 	@Test

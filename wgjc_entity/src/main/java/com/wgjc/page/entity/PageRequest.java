@@ -1,7 +1,5 @@
 package com.wgjc.page.entity;
 
-import org.springframework.beans.factory.annotation.Value;
-
 /** 
  * @Description: 分页查询请求封装
  * @author hc
@@ -9,10 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
  */
 public class PageRequest {
 	
-	//当前页码,默认起始值为1
 	private int pageNum;
-	
-	//页码数量,默认页数为20
 	private int pageSize;
 	
 	public PageRequest() {
