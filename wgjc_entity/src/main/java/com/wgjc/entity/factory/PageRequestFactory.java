@@ -1,4 +1,4 @@
-package com.wgjc.factory;
+package com.wgjc.entity.factory;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
