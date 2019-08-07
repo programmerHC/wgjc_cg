@@ -17,7 +17,7 @@ public class StudentController {
 	
 	@RequestMapping("/getallStudent")
 	public List<Student> getAllStudent(){
-		return studentService.getAllStudents();
+		return studentService.getAllRecord();
 	}
 	
 	@RequestMapping("/addStudent")

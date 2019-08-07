@@ -44,7 +44,7 @@ public class StudentTest {
 	
 	@Test
 	public void test() {
-		System.out.println(studentService.getAllStudents());
+		System.out.println(studentService.getAllRecord());
 		System.err.println("===============");
 		System.out.println(studentService.getById("222222"));
 		System.err.println("===============");

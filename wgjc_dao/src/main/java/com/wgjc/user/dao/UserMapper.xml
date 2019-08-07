@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="com.wgjc.user.dao.UserMapper">
+	<select id="getUserById" parameterType="java.lang.String" resultType="com.wgjc.user.entity.User">
+		select * from user u where u.uuid = #{uuid}
+	</select>
+	
+	<select id="getUserByUsername" parameterType="java.lang.String" resultType="com.wgjc.user.entity.User">
+		select * from user u where u.username = #{username}
+	</select>
+	
+	<select id="getAllUser" resultType="com.wgjc.user.entity.User">
+		select * from user
+	</select>
+	
+	<insert id="addUser" parameterType="com.wgjc.user.entity.User" useGeneratedKeys="true" keyProperty="uuid">
+		insert into user 	(  username ,   realname,    password,    phone,    adress)
+					values  (#{username}, #{realname}, #{password}, #{phone}, #{adress})
+	</insert>
+	
+	<delete id="deleteUserById" parameterType="java.lang.String">
+		delete from user a where a.uuid = #{uuid}
+	</delete>
+	
+	<update id="updateUser" parameterType="com.wgjc.user.entity.User">
+		update user a set a.username = #{username},a.realname = #{realname},a.password = #{password},a.phone = #{phone},a.adress = #{adress}
+	</update>
+</mapper>
