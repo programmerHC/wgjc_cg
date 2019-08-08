@@ -11,7 +11,7 @@ import com.wgjc.user.entity.User;
  */
 public interface UserMapper {
 	public User getUserById(String uuid);
-	public User getUserByUsername(String username);
+	public User getUserByUsername(String userName);
 	public List<User> getAllUser();
 	public int addUser(User user);
 	public int deleteUserById(String uuid);

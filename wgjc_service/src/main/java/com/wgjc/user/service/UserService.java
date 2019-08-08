@@ -1,6 +1,8 @@
 package com.wgjc.user.service;
 
+import com.github.pagehelper.PageInfo;
 import com.wgjc.base.service.BaseService;
+import com.wgjc.page.entity.PageRequest;
 import com.wgjc.user.entity.User;
 
 /** 
@@ -10,4 +12,6 @@ import com.wgjc.user.entity.User;
  */
 public interface UserService extends BaseService<User> {
 	public User getUserByUsername(String username);
+	public PageInfo<User> getPageInfo(PageRequest pageRequest); 
+	public boolean isUser(String userName,String password);
 }

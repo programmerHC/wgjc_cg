@@ -20,6 +20,4 @@ public class AjaxResult {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	
-	
 }
