@@ -20,28 +20,25 @@ public class CheckLoginInterceptor implements HandlerInterceptor {
 	public static Log log = LogFactory.getLog(CheckLoginInterceptor.class);
 
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)throws Exception {
+		Login methoLlogin = null;
+		Login classLogin = null;
 		if (!(handler instanceof HandlerMethod)) {
             return true;
         }
-		Login login = null;
 		HandlerMethod handlerMethod = (HandlerMethod) handler;
         String methodName = handlerMethod.getMethod().getName();
         log.info("访问方法名：" + methodName);
         
-        login = handlerMethod.getMethod().getAnnotation(Login.class);//反射查看方法上是否有注解
-        if(null == login) {
-        	return true;
-        }
-        
-        login = handlerMethod.getMethod().getDeclaringClass().getAnnotation(Login.class);//反射查看类上面是否有注解
-        if(null == login) {
+        methoLlogin = handlerMethod.getMethod().getAnnotation(Login.class);//反射查看方法上是否有注解
+        classLogin = handlerMethod.getMethod().getDeclaringClass().getAnnotation(Login.class);//反射查看类上面是否有注解
+        if(null == methoLlogin && null == classLogin) {
         	return true;
         }
         
         if (null == request.getSession().getAttribute("loginUser")) {
-       	 request.getRequestDispatcher("/login").forward(request,response);
+           log.info("用户未登录！");
+       	   request.getRequestDispatcher("/login").forward(request,response);
            return false;
        }
        return true;

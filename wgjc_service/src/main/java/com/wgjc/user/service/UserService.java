@@ -13,5 +13,5 @@ import com.wgjc.user.entity.User;
 public interface UserService extends BaseService<User> {
 	public User getUserByUsername(String username);
 	public PageInfo<User> getPageInfo(PageRequest pageRequest); 
-	public boolean isUser(String userName,String password);
+	public boolean isUser(User user);
 }
