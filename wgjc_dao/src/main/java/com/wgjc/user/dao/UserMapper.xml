@@ -28,6 +28,6 @@
 	</delete>
 	
 	<update id="updateUser" parameterType="com.wgjc.user.entity.User">
-		update user a set a.username = #{userName},a.realname = #{realName},a.password = #{password},a.phone = #{phone},a.adress = #{adress}
+		update user a set a.username = #{userName},a.realname = #{realName},a.password = #{password},a.phone = #{phone},a.adress = #{adress} where a.uuid =#{uuid}
 	</update>
 </mapper>
