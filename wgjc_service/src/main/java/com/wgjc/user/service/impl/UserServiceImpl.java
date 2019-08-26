@@ -14,6 +14,7 @@ import com.wgjc.encrypt.util.EncryptUtil;
 import com.wgjc.page.entity.PageRequest;
 import com.wgjc.user.dao.UserMapper;
 import com.wgjc.user.entity.User;
+import com.wgjc.user.entity.UserCondition;
 import com.wgjc.user.service.UserService;
 
 /** 
@@ -72,24 +73,43 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getById(String id) {
-		return userMapper.getUserById(id);
-	}
-
-	@Override
-	public List<User> getAllRecord() {
-		return userMapper.getAllUser();
+		User user = null;
+		try {
+			user = userMapper.getUserById(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e.getMessage(), e);
+		}
+		return user;
 	}
 
 	@Override
 	public User getUserByUsername(String userName) {
-		return userMapper.getUserByUsername(userName);
+		User user = null;
+		try {
+			user = userMapper.getUserByUsername(userName);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e.getMessage(), e);
+		}
+		return user;
 	}
 	
+	/**
+	 * User对象的分页条件查询
+	 */
 	@Override
-	public PageInfo<User> getPageInfo(PageRequest pageRequest) {
-		PageHelper.startPage(pageRequest.getPageNum(), pageRequest.getPageSize());
-		List<User> userList = getAllRecord();
-		return new PageInfo<User>(userList);
+	public PageInfo<User> getPageInfo(PageRequest pageRequest,UserCondition userCondition) {
+		PageInfo<User> userPageInfo = null;
+		try {
+			PageHelper.startPage(pageRequest.getPageNum(), pageRequest.getPageSize());
+			List<User> userList = userMapper.getAllUser(userCondition);
+			userPageInfo = new PageInfo<User>(userList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e.getMessage(), e);
+		}
+		return userPageInfo;
 	}
 	
 	/**

@@ -1,7 +1,5 @@
 package com.wgjc.base.service;
 
-import java.util.List;
-
 /** 
  * @ClassName: BaseService
  * @Description: 业务层基础类，包含CRUD基础操作接口
@@ -40,12 +38,4 @@ public interface BaseService<T> {
 	 * @return
 	 */
 	public T getById(String id);
-	
-	/**
-	 * 获取所有的对象
-	 * @Title: getAllRecord  
-	 * @Description: TODO 
-	 * @return
-	 */
-	public List<T> getAllRecord();
 }

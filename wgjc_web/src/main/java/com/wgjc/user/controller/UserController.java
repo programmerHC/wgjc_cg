@@ -13,6 +13,7 @@ import com.wgjc.encrypt.util.EncryptUtil;
 import com.wgjc.page.entity.AjaxResult;
 import com.wgjc.page.entity.PageRequest;
 import com.wgjc.user.entity.User;
+import com.wgjc.user.entity.UserCondition;
 import com.wgjc.user.service.UserService;
 
 /** 
@@ -72,9 +73,8 @@ public class UserController {
 	}
 	
 	@GetMapping("/userAll")
-	public PageInfo<User> getPageUser(PageRequest pageRequest){
-		PageInfo<User> pageInfo = userService.getPageInfo(pageRequest);
+	public PageInfo<User> getPageUser(PageRequest pageRequest,UserCondition userCondition){
+		PageInfo<User> pageInfo = userService.getPageInfo(pageRequest,userCondition);
 		return pageInfo;
-		
 	}
 }

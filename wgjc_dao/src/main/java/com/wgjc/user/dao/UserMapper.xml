@@ -11,15 +11,21 @@
 		select * from user u where u.username = #{userName}
 	</select>
 	
-	<select id="getAllUser" resultType="com.wgjc.user.entity.User">
+	<select id="getAllUser" parameterType="com.wgjc.user.entity.UserCondition" resultType="com.wgjc.user.entity.User">
 		select * from user
+		<where>
+			<if test="userName != null">username like '%${userName}%'</if>
+			<if test="realName != null">and realname like '%${realName}%'</if>
+			<if test="phone != null">and phone = #{realName}</if>
+			<if test="adress != null">and adress like '%${adress}%'</if>
+		</where>
 	</select>
 	
 	<insert id="addUser" parameterType="com.wgjc.user.entity.User" useGeneratedKeys="true">
 		<selectKey keyProperty="uuid" order="BEFORE" resultType="java.lang.String">
         	select replace(uuid(), '-', '')
         </selectKey>
-		insert into user 	(uuid,  username ,   realname,    password,    phone,    adress)
+		insert into user 	(  uuid,   username ,   realname,    password,    phone,    adress)
 					values  (#{uuid},#{userName}, #{realName}, #{password}, #{phone}, #{adress})
 	</insert>
 	
