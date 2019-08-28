@@ -12,6 +12,7 @@ import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.util.StringUtil;
 import com.wgjc.encrypt.util.EncryptUtil;
 import com.wgjc.page.entity.PageRequest;
+import com.wgjc.redis.util.RedisUtil;
 import com.wgjc.user.dao.UserMapper;
 import com.wgjc.user.entity.User;
 import com.wgjc.user.entity.UserCondition;
@@ -30,6 +31,8 @@ public class UserServiceImpl implements UserService {
 	private UserMapper userMapper;
 	@Autowired
 	private EncryptUtil encryptUtil;
+	@Autowired
+	private RedisUtil redisUtil;
 	
 	
 	@Override
@@ -49,7 +52,11 @@ public class UserServiceImpl implements UserService {
 	public boolean update(User record) {
 		boolean flag = false;
 		try {
-			userMapper.updateUser(record);
+			int result = userMapper.updateUser(record);
+			if(result > 0) {
+				redisUtil.del(record.getUuid());
+				redisUtil.set(record.getUuid(), record);
+			}
 			flag = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -62,7 +69,9 @@ public class UserServiceImpl implements UserService {
 	public boolean delete(String id) {
 		boolean flag = false;
 		try {
-			userMapper.deleteUserById(id);
+			int result = userMapper.deleteUserById(id);
+			if(result > 0)
+			redisUtil.del(id);
 			flag = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -75,7 +84,13 @@ public class UserServiceImpl implements UserService {
 	public User getById(String id) {
 		User user = null;
 		try {
-			user = userMapper.getUserById(id);
+			user = redisUtil.get(id,User.class);
+			if(user == null) {
+				user = userMapper.getUserById(id);
+				if(user != null) {
+					redisUtil.set(id, user);
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e.getMessage(), e);

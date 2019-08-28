@@ -17,5 +17,22 @@
 	    <artifactId>wgjc_dao</artifactId>
 	    <version>0.0.1-SNAPSHOT</version>
   	</dependency>
+  	
+   	<!-- spring boot redis 缓存引入 -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-redis</artifactId>
+    </dependency>
+    <!-- lettuce pool 缓存连接池 -->
+    <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-pool2</artifactId>
+    </dependency>
+    <!-- jackson json 优化缓存对象序列化 -->
+    <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+    </dependency>
+    
   </dependencies>
 </project>

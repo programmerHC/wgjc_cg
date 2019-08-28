@@ -1,17 +1,15 @@
 package com.wgjc.redis.util;
 
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.ListOperations;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.SetOperations;
-import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.data.redis.core.ZSetOperations;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Component;
+
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * @Description: redis工具类
@@ -19,79 +17,47 @@ import org.springframework.stereotype.Component;
  * @date 2019年8月1日下午3:57:10
  */
 @Component
-public class RedisUtil<HK, V> {
-	// 在构造器中获取redisTemplate实例, key(not hashKey) 默认使用String类型
-	private RedisTemplate<String, V> redisTemplate;
-	// 在构造器中通过redisTemplate的工厂方法实例化操作对象
-	private HashOperations<String, HK, V> hashOperations;
-	private ListOperations<String, V> listOperations;
-	private ZSetOperations<String, V> zSetOperations;
-	private SetOperations<String, V> setOperations;
-	private ValueOperations<String, V> valueOperations;
-
+public class RedisUtil{
 	@Autowired
-	public RedisUtil(RedisTemplate<String, V> redisTemplate) {
-		this.redisTemplate = redisTemplate;
-		this.hashOperations = redisTemplate.opsForHash();
-		this.listOperations = redisTemplate.opsForList();
-		this.zSetOperations = redisTemplate.opsForZSet();
-		this.setOperations = redisTemplate.opsForSet();
-		this.valueOperations = redisTemplate.opsForValue();
-	}
+	@Qualifier(value = "redisTemplate")
+    RedisTemplate<String, String> template;
+	
+    public <T> boolean set(String key, T value) {
+        return set(key, JSONObject.toJSONString(value),0);
+    }
 
-	public void hashPut(String key, HK hashKey, V value) {
-		hashOperations.put(key, hashKey, value);
-	}
+    public boolean set(String key, String value, long validTime) {
+        boolean result = template.execute(new RedisCallback<Boolean>() {
+            @Override
+            public Boolean doInRedis(RedisConnection connection) throws DataAccessException {
+                RedisSerializer<String> serializer = template.getStringSerializer();
+                connection.set(serializer.serialize(key), serializer.serialize(value));
+                if(validTime > 0) {
+                	connection.expire(serializer.serialize(key), validTime);
+                }
+                return true;
+            }
+        });
+        return result;
+    }
 
-	public Map<HK, V> hashFindAll(String key) {
-		return hashOperations.entries(key);
-	}
+    public <T> T get(String key, Class<T> clazz) {
+        return JSONObject.parseObject(get(key), clazz);
+    }
 
-	public V hashGet(String key, HK hashKey) {
-		return hashOperations.get(key, hashKey);
-	}
+    public String get(String key) {
+        String result = template.execute(new RedisCallback<String>() {
+            @Override
+            public String doInRedis(RedisConnection connection) throws DataAccessException {
+                RedisSerializer<String> serializer = template.getStringSerializer();
+                byte[] value = connection.get(serializer.serialize(key));
+                return serializer.deserialize(value);
+            }
+        });
+        return result;
+    }
 
-	public void hashRemove(String key, HK hashKey) {
-		hashOperations.delete(key, hashKey);
-	}
-
-	public Long listPush(String key, V value) {
-		return listOperations.rightPush(key, value);
-	}
-
-	public Long listUnshift(String key, V value) {
-		return listOperations.leftPush(key, value);
-	}
-
-	public List<V> listFindAll(String key) {
-		if (!redisTemplate.hasKey(key)) {
-			return null;
-		}
-		return listOperations.range(key, 0, listOperations.size(key));
-	}
-
-	public V listLPop(String key) {
-		return listOperations.leftPop(key);
-	}
-
-	public void setValue(String key, V value) {
-		valueOperations.set(key, value);
-	}
-
-	public void setValue(String key, V value, long timeout) {
-		ValueOperations<String, V> vo = redisTemplate.opsForValue();
-		vo.set(key, value, timeout, TimeUnit.MILLISECONDS);
-	}
-
-	public V getValue(String key) {
-		return valueOperations.get(key);
-	}
-
-	public void remove(String key) {
-		redisTemplate.delete(key);
-	}
-
-	public boolean expire(String key, long timeout, TimeUnit timeUnit) {
-		return redisTemplate.expire(key, timeout, timeUnit);
-	}
+    public boolean del(String key) {
+        return template.delete(key);
+    }
 }
