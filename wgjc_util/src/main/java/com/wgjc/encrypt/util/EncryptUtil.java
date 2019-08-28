@@ -1,5 +1,7 @@
 package com.wgjc.encrypt.util;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 import javax.crypto.Cipher;
@@ -9,7 +11,7 @@ import javax.crypto.spec.DESKeySpec;
 
 import org.springframework.stereotype.Component;
 
-/** 
+/**
  * @Description: 加密解密类
  * @author hc
  * @date 2019年7月30日下午1:40:08
@@ -18,10 +20,10 @@ import org.springframework.stereotype.Component;
 public class EncryptUtil {
 	private static final String PASSWORD_CRYPT_KEY = "WGJCWGJC";
 	private final static String DES = "DES";
-	
+
 	/**
-	 * @Title: encrypt  
-	 * @Description: 加密算法 
+	 * @Title: encrypt
+	 * @Description: 加密算法
 	 * @param src 数据源
 	 * @param key 密钥，长度必须是8的倍数
 	 * @return 返回加密后的数据
@@ -44,10 +46,10 @@ public class EncryptUtil {
 		// 正式执行加密操作
 		return cipher.doFinal(src);
 	}
-	
+
 	/**
-	 * @Title: decrypt  
-	 * @Description: 解密算法 
+	 * @Title: decrypt
+	 * @Description: 解密算法
 	 * @param src 数据源
 	 * @param key 密钥，长度必须是8的倍数
 	 * @return 返回解密后的原始数据
@@ -70,10 +72,10 @@ public class EncryptUtil {
 		// 正式执行解密操作
 		return cipher.doFinal(src);
 	}
-	
+
 	/**
-	 * @Title: hex2byte  
-	 * @Description: 二进制字符还原 
+	 * @Title: hex2byte
+	 * @Description: 二进制字符还原
 	 * @param b
 	 * @return
 	 */
@@ -89,10 +91,10 @@ public class EncryptUtil {
 		}
 		return hs.toUpperCase();
 	}
-	
+
 	/**
-	 * @Title: hex2byte  
-	 * @Description: TODO 
+	 * @Title: hex2byte
+	 * @Description: TODO
 	 * @param b
 	 * @return
 	 */
@@ -106,9 +108,9 @@ public class EncryptUtil {
 		}
 		return b2;
 	}
-	
+
 	/**
-	 * @Title: decrypt  
+	 * @Title: decrypt
 	 * @Description: 密码解密
 	 * @param data
 	 * @return
@@ -120,9 +122,9 @@ public class EncryptUtil {
 		}
 		return null;
 	}
-	
+
 	/**
-	 * @Title: encrypt  
+	 * @Title: encrypt
 	 * @Description: 密码加密
 	 * @param password
 	 * @return
@@ -133,5 +135,34 @@ public class EncryptUtil {
 		} catch (Exception e) {
 		}
 		return null;
+	}
+
+	/**
+	 * @Title: EncoderByMd5  
+	 * @Description: Md5 Hex加密 
+	 * @param password
+	 * @return
+	 */
+	public String EncoderByMd5(String password) {
+		String result = "";
+		try {
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			byte[] bytes = md.digest(password.getBytes("utf-8"));
+			result = toHex(bytes);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	public String toHex(byte[] bytes) {
+		final char[] HEX_DIGITS = "0123456789ABCDEF".toCharArray();
+		StringBuilder ret = new StringBuilder(bytes.length * 2);
+		for (int i = 0; i < bytes.length; i++) {
+			ret.append(HEX_DIGITS[(bytes[i] >> 4) & 0x0f]);
+			ret.append(HEX_DIGITS[bytes[i] & 0x0f]);
+		}
+		return ret.toString();
 	}
 }

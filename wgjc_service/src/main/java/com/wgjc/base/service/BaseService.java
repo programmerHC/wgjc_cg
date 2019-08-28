@@ -1,4 +1,5 @@
 package com.wgjc.base.service;
+
 /** 
  * @ClassName: BaseService
  * @Description: 业务层基础类，包含CRUD基础操作接口
@@ -12,7 +13,7 @@ public interface BaseService<T> {
 	 * @param record
 	 * @return
 	 */
-	public int save(T record);
+	public boolean save(T record);
 	
 	/**
 	 * @Title: update  
@@ -20,7 +21,7 @@ public interface BaseService<T> {
 	 * @param record
 	 * @return
 	 */
-	public int update(T record);
+	public boolean update(T record);
 	
 	/**
 	 * @Title: delete  
@@ -28,7 +29,7 @@ public interface BaseService<T> {
 	 * @param id
 	 * @return
 	 */
-	public int delete(String id);
+	public boolean delete(String id);
 	
 	/**
 	 * @Title: getById  

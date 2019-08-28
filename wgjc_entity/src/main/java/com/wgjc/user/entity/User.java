@@ -9,9 +9,9 @@ public class User {
 	//主键
 	private String uuid;
 	//用户名
-	private String username;
+	private String userName;
 	//真实姓名
-	private String realname;
+	private String realName;
 	//密码
 	private String password;
 	//电话
@@ -25,17 +25,17 @@ public class User {
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
-	public String getUsername() {
-		return username;
+	public String getUserName() {
+		return userName;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
-	public String getRealname() {
-		return realname;
+	public String getRealName() {
+		return realName;
 	}
-	public void setRealname(String realname) {
-		this.realname = realname;
+	public void setRealName(String realName) {
+		this.realName = realName;
 	}
 	public String getPhone() {
 		return phone;

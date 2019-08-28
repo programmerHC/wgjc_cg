@@ -1,9 +1,10 @@
-package com.wgjc.factory;
+package com.wgjc.entity.factory;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.wgjc.page.entity.AjaxResult;
 import com.wgjc.page.entity.PageRequest;
 
 /** 
@@ -12,11 +13,7 @@ import com.wgjc.page.entity.PageRequest;
  * @date 2019年7月29日上午10:19:14
  */
 @Configuration
-public class PageRequestFactory {
-	@Bean(name = "pageRequest")
-	public static PageRequest getPageRequest() {
-		return new PageRequest();
-	}
+public class BeanFactory {
 	
 	/**
 	 * @Title: getDefaultPageRequest  
@@ -28,5 +25,15 @@ public class PageRequestFactory {
 	@Bean(name = "defaultPageRequest")
 	public static PageRequest getDefaultPageRequest(@Value("1")int pageNum,@Value("20")int pageSize) {
 		return new PageRequest(pageNum, pageSize);
+	}
+	
+	/**
+	 * @Title: getAjaxResult  
+	 * @Description: ajax默认返回结果封装 
+	 * @return
+	 */
+	@Bean(name = "ajaxResult")
+	public static AjaxResult getAjaxResult() {
+		return new AjaxResult();
 	}
 }

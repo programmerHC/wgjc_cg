@@ -6,7 +6,7 @@ package com.wgjc.role.entity;
  */
 public class Role {
 	private String uuid;//角色id
-	private String rolename;//角色name
+	private String roleName;//角色name
 	
 	public String getUuid() {
 		return uuid;
@@ -14,10 +14,10 @@ public class Role {
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
-	public String getRolename() {
-		return rolename;
+	public String getRoleName() {
+		return roleName;
 	}
-	public void setRolename(String rolename) {
-		this.rolename = rolename;
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
 	}
 }

@@ -6,7 +6,7 @@ package com.wgjc.func.entity;
  */
 public class Func {
 	private String uuid;//功能id
-	private String funcname;//功能name
+	private String funcName;//功能name
 	private String funcUrl;//功能地址
 	private int order;//功能排序
 	
@@ -16,11 +16,11 @@ public class Func {
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
-	public String getFuncname() {
-		return funcname;
+	public String getFuncName() {
+		return funcName;
 	}
-	public void setFuncname(String funcname) {
-		this.funcname = funcname;
+	public void setFuncName(String funcName) {
+		this.funcName = funcName;
 	}
 	public String getFuncUrl() {
 		return funcUrl;
