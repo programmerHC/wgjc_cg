@@ -56,8 +56,8 @@ public class UserServiceImpl implements UserService {
 			if(result > 0) {
 				redisUtil.del(record.getUuid());
 				redisUtil.set(record.getUuid(), record);
+				flag = true;
 			}
-			flag = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e.getMessage(), e);
@@ -70,9 +70,10 @@ public class UserServiceImpl implements UserService {
 		boolean flag = false;
 		try {
 			int result = userMapper.deleteUserById(id);
-			if(result > 0)
-			redisUtil.del(id);
-			flag = true;
+			if(result > 0) {
+				redisUtil.del(id);
+				flag = true;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e.getMessage(), e);

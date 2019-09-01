@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /** 
- * @Description: 初始页面
+ * @Description: 初始页面api
  * @author hc
  * @date 2019年8月7日下午2:34:15
  */

@@ -6,8 +6,11 @@
 		select * from goods a where a.uuid = #{uuid}
 	</select>
 	
-	<select id="getGoodsByName" parameterType="java.lang.String" resultType="com.wgjc.goods.entity.Goods">
-		select * from goods a where a.name like '%${name}%'
+	<select id="getAllGoods" parameterType="com.wgjc.goods.entity.GoodsCondition" resultType="com.wgjc.goods.entity.Goods">
+		select * from goods
+		<where>
+			<if test="name != null"> name like '%${name}%'</if>
+		</where>
 	</select>
 	
 	<insert id="addGoods" parameterType="com.wgjc.goods.entity.Goods" useGeneratedKeys="true">
@@ -18,5 +21,11 @@
 					values (#{name},#{size},#{count},#{unit},#{price},#{remark})
 	</insert>
 	
+	<update id="updateGoods" parameterType="com.wgjc.goods.entity.Goods">
+		update goods set name = #{name},size = #{size},count = #{count},uint = #{uint},price = #{price},remark = #{remark} where uuid = #{uuid}
+	</update>
 	
+	<delete id="deleteGoodsById" parameterType="java.lang.String">
+		delete from goods where uuid = #{uuid}
+	</delete>
 </mapper>

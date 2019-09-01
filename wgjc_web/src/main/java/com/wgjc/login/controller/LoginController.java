@@ -1,6 +1,6 @@
 package com.wgjc.login.controller;
 /** 
- * @Description: 登录业务逻辑处理
+ * @Description: 登录业务逻辑api
  * @author hc
  * @date 2019年8月7日下午3:18:54
  */

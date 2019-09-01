@@ -17,7 +17,7 @@ import com.wgjc.user.entity.UserCondition;
 import com.wgjc.user.service.UserService;
 
 /** 
- * @Description: 用户操作接口
+ * @Description: 用户操作接口api
  * @author hc
  * @date 2019年8月21日下午12:56:30
  */
