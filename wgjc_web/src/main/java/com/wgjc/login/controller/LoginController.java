@@ -8,18 +8,18 @@ package com.wgjc.login.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.wgjc.login.annotation.Login;
 import com.wgjc.page.entity.AjaxResult;
 import com.wgjc.user.entity.User;
 import com.wgjc.user.service.UserService;
 
-@Controller
+@RestController
 public class LoginController {
 	@Autowired
 	private UserService userService;
@@ -35,9 +35,9 @@ public class LoginController {
 	 * @return
 	 */
 	@PostMapping("/checkLogin")
-	public @ResponseBody AjaxResult checkLogin(@RequestParam(required = true)String userName,@RequestParam(required = true)String password,HttpSession session) {
+	public AjaxResult checkLogin(@RequestParam(required = true)String userName,@RequestParam(required = true)String password,HttpSession session) {
 		User user = userService.getUserByUsername(userName);
-		boolean flag = userService.isUser(user);
+		boolean flag = userService.isUser(user,password);
 		if(flag) {
 			session.setAttribute("loginUser", user);
 			ajaxResult.setResult(0, "登录成功");
@@ -55,8 +55,9 @@ public class LoginController {
 	 */
 	@Login
 	@GetMapping("/quitLogin")
-	public String quitLogin(HttpSession session) {
+	public ModelAndView quitLogin(HttpSession session) {
 		session.invalidate();
-		return "redirect:/loginPage";
+		ModelAndView mav = new ModelAndView("redirect:/loginPage");
+		return mav;
 	}
 }

@@ -14,5 +14,5 @@ import com.wgjc.user.entity.UserCondition;
 public interface UserService extends BaseService<User> {
 	public User getUserByUsername(String username);
 	public PageInfo<User> getPageInfo(PageRequest pageRequest,UserCondition userCondition); 
-	public boolean isUser(User user);
+	public boolean isUser(User user,String password_entry_in);
 }

@@ -135,14 +135,13 @@ public class UserServiceImpl implements UserService {
 	 * @param userName
 	 * @return false该用户账号密码错误，true则该用户为该数据库中用户
 	 */
-	public boolean isUser(User user) {
+	public boolean isUser(User user,String password_entry_in) {
 		boolean flag = false;
 		if(user != null) {
-			String password_entry_in = user.getPassword();//数据库中密码
 			if(StringUtil.isNotEmpty(password_entry_in)) {
-				String password_entry_in_des = encryptUtil.decrypt(password_entry_in);//数据库密码解密
+				String password_entry_in_des = encryptUtil.decrypt(user.getPassword());//数据库密码解密
 				String password_entry_in_des_md5 = encryptUtil.EncoderByMd5(password_entry_in_des);//后台解密数据以md5方式加密
-				if(password_entry_in_des.equals(password_entry_in_des_md5)) {//前后台密码都要进行加密，前台数据需要md5方式加密
+				if(password_entry_in.equals(password_entry_in_des_md5)) {//前后台密码都要进行加密，前台数据需要md5方式加密
 					flag = true;
 				}
 			}
