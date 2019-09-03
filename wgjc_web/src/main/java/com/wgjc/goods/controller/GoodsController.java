@@ -23,9 +23,9 @@ import com.wgjc.page.entity.PageRequest;
 @RestController
 public class GoodsController {
 	@Autowired
-	GoodsService goodsService;
+	private GoodsService goodsService;
 	@Autowired
-	AjaxResult ajaxResult;
+	private AjaxResult ajaxResult;
 	
 	@GetMapping("/goods")
 	public Goods getGoods(@RequestParam(value = "uuid",required = true)String uuid) {

@@ -21,10 +21,8 @@ public class Account {
 	private String unit;
 	//货物价格
 	private String price;
-	//总价
-	private String sum;
 	//类型，买为0，退为1
-	private String type;
+	private int type;
 	//创建日期
 	private Date createDate;
 	//创建人
@@ -72,16 +70,10 @@ public class Account {
 	public void setPrice(String price) {
 		this.price = price;
 	}
-	public String getSum() {
-		return sum;
-	}
-	public void setSum(String sum) {
-		this.sum = sum;
-	}
-	public String getType() {
+	public int getType() {
 		return type;
 	}
-	public void setType(String type) {
+	public void setType(int type) {
 		this.type = type;
 	}
 	public Date getCreateDate() {

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -20,6 +21,7 @@ import com.wgjc.redis.util.RedisUtil;
  * @author hc
  * @2019年9月1日
  */
+@Service
 public class GoodsSrviceImpl implements GoodsService {
 	private static Log log = LogFactory.getLog(GoodsSrviceImpl.class);
 	
