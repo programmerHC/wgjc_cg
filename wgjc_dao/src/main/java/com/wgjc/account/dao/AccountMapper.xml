@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wgjc.account.dao.AccountMapper">
+	<select id="getAccountById" parameterType="java.lang.String" resultType="com.wgjc.account.entity.Account">
+		select * from accounts where uuid = #{uuid}
+	</select>
+	
+	<select id="getAllAcount" parameterType="com.wgjc.account.entity.AccountCondition" resultType="com.wgjc.account.entity.Account">
+		select * from accounts
+		<where>
+			<if test="name != null">name like '%${name}%'</if>
+			<if test="type != null">type = #{type}</if>
+			<if test="beginDate != null">createDate &gt;= #{beginDate}</if>
+			<if test="endDate != null">createDate &lt;= #{endDate}</if>
+		</where>
+	</select>
+	
+	<insert id="addAccount" parameterType="com.wgjc.account.entity.Account" useGeneratedKeys="true">
+		<selectKey keyProperty="uuid" order="BEFORE" resultType="java.lang.String">
+        	select replace(uuid(), '-', '')
+        </selectKey>
+		insert into accounts(uuid,   userId,   name,   size,   count,   unit,   price,   type,   createDate,   creator)
+					values(#{uuid},#{userId},#{name},#{size},#{count},#{unit},#{price},#{type},#{createDate},#{creator})
+	</insert>
+	
+	<delete id="deleteAccountById" parameterType="java.lang.String">
+		delete from accounts where uuid = #{uuid}
+	</delete>
+	
+	<update id="updateAccount" parameterType="com.wgjc.account.entity.Account">
+		update accounts set userId = #{userId},name = #{name},size = #{size},count = #{count},
+							unit = #{unit},price = #{price},type = #{type},createDate = #{createDate},
+							creator = #{creator} where uuid = #{uuid}
+	</update>
+</mapper>      

@@ -80,9 +80,12 @@ public class GoodsSrviceImpl implements GoodsService {
 	public Goods getById(String id) {
 		Goods goods = null;
 		try {
-			goods = goodsMapper.getGoodsById(id);
-			if(goods != null) {
-				redisUtil.set(id, goods); 
+			goods = redisUtil.get(id,Goods.class);
+			if(goods == null) {
+				goods = goodsMapper.getGoodsById(id);
+				if(goods != null) {
+					redisUtil.set(id, goods); 
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -94,8 +97,8 @@ public class GoodsSrviceImpl implements GoodsService {
 	@Override
 	public PageInfo<Goods> getPageInfo(PageRequest pageRequest, GoodsCondition goodsCondition) {
 		PageInfo<Goods> goodsPageInfo = null;
+		PageHelper.startPage(pageRequest.getPageNum(), pageRequest.getPageSize());
 	    try {
-			PageHelper.startPage(pageRequest.getPageNum(), pageRequest.getPageSize());
 			List<Goods> list = goodsMapper.getAllGoods(goodsCondition);
 			goodsPageInfo = new PageInfo<Goods>(list);
 		} catch (Exception e) {

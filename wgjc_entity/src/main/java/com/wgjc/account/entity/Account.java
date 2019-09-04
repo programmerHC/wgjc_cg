@@ -2,6 +2,8 @@ package com.wgjc.account.entity;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 /** 
  * @Description: 菜单账目表
  * @author hc
@@ -24,6 +26,7 @@ public class Account {
 	//类型，买为0，退为1
 	private int type;
 	//创建日期
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date createDate;
 	//创建人
 	private String creator;

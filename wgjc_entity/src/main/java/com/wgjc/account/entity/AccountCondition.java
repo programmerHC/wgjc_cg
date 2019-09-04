@@ -12,8 +12,10 @@ public class AccountCondition {
 	private String name;
 	//类型，买为0，退为1
 	private String type;
-	//创建日期
-	private Date createDate;
+	//起始日期
+	private Date beginDate;
+	//结束日期
+	private Date endTime;
 	
 	public String getName() {
 		return name;
@@ -27,10 +29,16 @@ public class AccountCondition {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public Date getCreateDate() {
-		return createDate;
+	public Date getBeginDate() {
+		return beginDate;
 	}
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public void setBeginDate(Date beginDate) {
+		this.beginDate = beginDate;
+	}
+	public Date getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 }

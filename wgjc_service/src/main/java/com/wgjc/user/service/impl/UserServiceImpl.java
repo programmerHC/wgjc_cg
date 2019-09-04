@@ -117,8 +117,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public PageInfo<User> getPageInfo(PageRequest pageRequest,UserCondition userCondition) {
 		PageInfo<User> userPageInfo = null;
+		PageHelper.startPage(pageRequest.getPageNum(), pageRequest.getPageSize());
 		try {
-			PageHelper.startPage(pageRequest.getPageNum(), pageRequest.getPageSize());
 			List<User> userList = userMapper.getAllUser(userCondition);
 			userPageInfo = new PageInfo<User>(userList);
 		} catch (Exception e) {

@@ -17,8 +17,8 @@
 		<selectKey keyProperty="uuid" order="BEFORE" resultType="java.lang.String">
         	select replace(uuid(), '-', '')
         </selectKey>
-		insert into goods (   name,   size,   count,   unit,   price,   remark)
-					values (#{name},#{size},#{count},#{unit},#{price},#{remark})
+		insert into goods (   uuid,   name,   size,   count,   unit,   price,   remark)
+					values (#{uuid},#{name},#{size},#{count},#{unit},#{price},#{remark})
 	</insert>
 	
 	<update id="updateGoods" parameterType="com.wgjc.goods.entity.Goods">
