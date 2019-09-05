@@ -1,5 +1,6 @@
 package com.wgjc.goods.controller;
 
+import org.hibernate.validator.internal.util.StringHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,7 +47,19 @@ public class GoodsController {
 	
 	@PutMapping("/goods")
 	public AjaxResult updateGoods(Goods goods) {
-		boolean flag = goodsService.update(goods);
+		Goods goods_update = new Goods();
+		if(goods != null && StringHelper.isNullOrEmptyString(goods.getUuid())) {
+			goods_update = goodsService.getById(goods.getUuid());
+			if(goods_update != null) {
+				goods_update.setCount(goods.getCount());
+				goods_update.setName(goods.getName());
+				goods_update.setPrice(goods.getPrice());
+				goods_update.setRemark(goods.getRemark());
+				goods_update.setSize(goods.getSize());
+				goods_update.setUnit(goods.getUnit());
+			}
+		}
+		boolean flag = goodsService.update(goods_update);
 		if(flag) {
 			ajaxResult.setResult(0, "更新商品成功");
 		}else {

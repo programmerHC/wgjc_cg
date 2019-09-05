@@ -6,6 +6,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -106,5 +108,55 @@ public class AccountServiceImpl implements AccountService{
 		}
 		return pageInfo;
 	}
+	
+	/**
+	 * 事务保存多条账单记录,若有异常，则对数据进行回滚
+	 */
+	@Override
+	@Transactional(rollbackFor=Exception.class)
+	public boolean saveAccounts(List<Account> accounts) {
+		boolean flag = true;
+		if(accounts != null && accounts.size() > 0) {
+			try {
+				for(Account account: accounts) {
+					save(account);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				log.error(e.getMessage(), e);
+				setRollbackOnly();
+				flag = false;
+			}
+		}
+		return flag;
+	}
 
+	/**
+	 * 事务删除多条账单记录,若有异常，则对数据进行回滚
+	 */
+	@Override
+	@Transactional(rollbackFor=Exception.class)
+	public boolean deleteAccounts(String[] uuids) {
+		boolean flag = true;
+		if(uuids != null && uuids.length > 0) {
+			try {
+				for(String uuid : uuids) {
+					boolean flag_in  = delete(uuid);
+					if(flag_in) {
+						redisUtil.del(uuid);
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				log.error(e.getMessage(), e);
+				setRollbackOnly();
+				flag = false;
+			}
+		}
+		return flag;
+	}
+	
+	public void setRollbackOnly() {
+		TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+	}
 }

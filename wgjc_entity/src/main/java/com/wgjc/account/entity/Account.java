@@ -31,6 +31,8 @@ public class Account {
 	//创建人
 	private String creator;
 	
+	public Account() {}
+	
 	public String getUuid() {
 		return uuid;
 	}

@@ -1,5 +1,6 @@
 package com.wgjc.user.controller;
 
+import org.hibernate.validator.internal.util.StringHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,7 +47,17 @@ public class UserController {
 	
 	@PutMapping("/user")
 	public AjaxResult updateUser(User user) {
-		boolean flag = userService.update(user);
+		User user_update = new User();
+		if(user != null && !StringHelper.isNullOrEmptyString(user.getUuid())) {
+			user_update = userService.getById(user.getUuid());
+			if(user_update != null) {
+				user_update.setAdress(user.getAdress());
+				user_update.setPhone(user.getPhone());
+				user_update.setRealName(user.getRealName());
+				user_update.setUserName(user.getUserName());
+			}
+		}
+		boolean flag = userService.update(user_update);
 		if(flag) {
 			ajaxResult.setResult(0, "编辑用户成功");
 		}else {
