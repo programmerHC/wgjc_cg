@@ -5,6 +5,7 @@ package com.wgjc.account.controller;
  * @date 2019年9月3日上午10:30:41
  */
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.validator.internal.util.StringHelper;
@@ -99,5 +100,11 @@ public class AccountController {
 	public PageInfo<Account> getAccountPage(PageRequest pageRequest,AccountCondition accountCondition){
 		PageInfo<Account> pageInfo = accountservice.getPageInfo(pageRequest, accountCondition);
 		return pageInfo;
+	}
+	
+	@PostMapping("/printAccount")
+	public AjaxResult printAccount(@RequestBody List<Account> accounts) {
+		ajaxResult = accountservice.makeAccountsToExcel(accounts);
+		return ajaxResult;
 	}
 }

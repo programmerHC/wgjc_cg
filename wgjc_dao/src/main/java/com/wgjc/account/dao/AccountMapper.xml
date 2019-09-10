@@ -11,8 +11,8 @@
 		<where>
 			<if test="name != null">name like '%${name}%'</if>
 			<if test="type != null">type = #{type}</if>
-			<if test="beginDate != null">createDate &gt;= #{beginDate}</if>
-			<if test="endDate != null">createDate &lt;= #{endDate}</if>
+			<if test="beginDate != null">buyDate &gt;= #{beginDate}</if>
+			<if test="endDate != null">buyDate &lt;= #{endDate}</if>
 		</where>
 	</select>
 	
@@ -20,8 +20,8 @@
 		<selectKey keyProperty="uuid" order="BEFORE" resultType="java.lang.String">
         	select replace(uuid(), '-', '')
         </selectKey>
-		insert into accounts(uuid,   userId,   name,   size,   count,   unit,   price,   type,   createDate,   creator)
-					values(#{uuid},#{userId},#{name},#{size},#{count},#{unit},#{price},#{type},#{createDate},#{creator})
+		insert into accounts(uuid,   userId,   name,   size,   count,   unit,   price,   type,   createDate,   creator,   buyDate)
+					values(#{uuid},#{userId},#{name},#{size},#{count},#{unit},#{price},#{type},#{createDate},#{creator},#{buyDate})
 	</insert>
 	
 	<delete id="deleteAccountById" parameterType="java.lang.String">
@@ -31,6 +31,6 @@
 	<update id="updateAccount" parameterType="com.wgjc.account.entity.Account">
 		update accounts set userId = #{userId},name = #{name},size = #{size},count = #{count},
 							unit = #{unit},price = #{price},type = #{type},createDate = #{createDate},
-							creator = #{creator} where uuid = #{uuid}
+							creator = #{creator},buyDate = #{buyDate}  where uuid = #{uuid}
 	</update>
 </mapper>      

@@ -1,0 +1,5 @@
+新增账单数据格式
+[{"userId":"53a57c3ec3f311e99d9d00ff5dd1ba76","name":"水泥","size":"5*5","count":"6","unit":"个","price":"50","type":"0","createDate":"2012-02-09","creator":"4"},{"userId":"53a57c3ec3f311e99d9d00ff5dd1ba76","name":"水泥","size":"5*5","count":"6","unit":"个","price":"50","type":"0","createDate":"2012-02-09","creator":"4"}]
+
+https://blog.csdn.net/goodleiwei/article/details/8553727
+https://www.cnblogs.com/biehongli/p/6497653.html

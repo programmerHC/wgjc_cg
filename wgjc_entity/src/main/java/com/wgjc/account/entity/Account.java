@@ -30,6 +30,9 @@ public class Account {
 	private Date createDate;
 	//创建人
 	private String creator;
+	//购买日期
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date buyDate;
 	
 	public Account() {}
 	
@@ -92,5 +95,11 @@ public class Account {
 	}
 	public void setCreator(String creator) {
 		this.creator = creator;
+	}
+	public Date getBuyDate() {
+		return buyDate;
+	}
+	public void setBuyDate(Date buyDate) {
+		this.buyDate = buyDate;
 	}
 }
