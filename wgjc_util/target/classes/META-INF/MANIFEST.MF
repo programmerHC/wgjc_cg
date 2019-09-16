@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: wgjc_util
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: huangchao
+Implementation-Vendor-Id: com.wgjc
+Build-Jdk: 1.8.0_181
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/wgjc_parent/wgjc_util
+Created-By: Maven Integration for Eclipse
+
