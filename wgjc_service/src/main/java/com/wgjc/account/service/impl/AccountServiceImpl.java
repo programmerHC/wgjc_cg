@@ -184,7 +184,6 @@ public class AccountServiceImpl implements AccountService{
 	
 	@Override
 	public AjaxResult makeAccountsToExcel(List<Account> accounts) {
-		boolean result = false;
 		
 		String path = "";
 		String excelName = "";
@@ -192,8 +191,8 @@ public class AccountServiceImpl implements AccountService{
 		String buyDate  = "";
 		WritableWorkbook workbook = null;
 		String[] titles = {"品名","规格型号","单位","数量","单价","金额"};
-		String description = "经营范围：五金、油漆、木材、水暖，琉璃瓦、石棉瓦、瓷砖、油毡、水泥、白水泥、石膏板等。"+"\n" + 
-							 "手机：18055349108   电话：8371389"+"\n" + 
+		String description = "经营范围：五金、油漆、木材、水暖，琉璃瓦、石棉瓦、瓷砖、油毡、水泥、白水泥、石膏板等。"+"\r\n" + 
+							 "手机：18055349108   电话：8371389"+"\r\n" + 
 							 "地址：芜湖市弋江区火龙岗镇塔影行政村晋村(村大队旁)";
 		
 		if(accounts != null && accounts.size() > 0) {
@@ -227,21 +226,19 @@ public class AccountServiceImpl implements AccountService{
 				//3、创建sheet,设置第二三四..个sheet，依次类推即可
 				WritableSheet sheet = workbook.createSheet(excelName, 0);
 				
-				sheet.setColumnView(0, 20); // 设置列的宽度
+				sheet.setColumnView(0, 15); // 设置列的宽度
 				sheet.setColumnView(1, 20); // 设置列的宽度
 				sheet.setColumnView(2, 10); // 设置列的宽度
-				sheet.setColumnView(3, 15); // 设置列的宽度
+				sheet.setColumnView(3, 10); // 设置列的宽度
 				sheet.setColumnView(4, 15); // 设置列的宽度
 				sheet.setColumnView(5, 15); // 设置列的宽度
-				sheet.setColumnView(6, 15); // 设置列的宽度
 					
 				sheet.mergeCells(0, 0, 5, 3);
 				sheet.mergeCells(0, 4, 2, 5);
 				sheet.mergeCells(3, 4, 5, 5);
-				sheet.mergeCells(0, 38,2, 38);
-				sheet.mergeCells(0, 38,2, 38);
-				sheet.mergeCells(3, 38,5, 38);
-				sheet.mergeCells(0, 39,5, 43);
+				sheet.mergeCells(0, 45,2, 45);
+				sheet.mergeCells(3, 45,5, 45);
+				sheet.mergeCells(0, 46,5, 50);
 				
 				//头部标题
 				WritableCellFormat wcf_head = getHeadWritableCellFormat();
@@ -287,13 +284,30 @@ public class AccountServiceImpl implements AccountService{
 					sheet.addCell(price_sum);
 				}
 				
-				Label sum_desc_label = new Label(0,38,"合计人命币：",wcf_title);
+				for(int size = accounts.size(); size <= 40; size++) {//表格填充
+					Label name_lable = new Label(0,7+size,"",wcf_content);
+					sheet.addCell(name_lable);
+					Label size_lable = new Label(1,7+size,"",wcf_content);
+					sheet.addCell(size_lable);
+					Label unit_lable = new Label(2,7+size,"",wcf_content);
+					sheet.addCell(unit_lable);
+					Label count_lable = new Label(3,7+size,"",wcf_content);
+					sheet.addCell(count_lable);
+					Label price_lable = new Label(4,7+size,"",wcf_content);
+					sheet.addCell(price_lable);
+					Label price_sum = new Label(5,7+size,"",wcf_content);
+					sheet.addCell(price_sum);
+					
+				}
+				
+				Label sum_desc_label = new Label(0,45,"合计人命币：",wcf_title);
 				sheet.addCell(sum_desc_label);
-				Label sum_all_label = new Label(3,38,"¥ "+sum_all+" 元",wcf_title);
+				Label sum_all_label = new Label(3,45,"¥ " +sum_all+ " 元",wcf_title);
 				sheet.addCell(sum_all_label);
 				
 				WritableCellFormat wcf_description = getDescriptionWritableCellFormat();
-				Label desc_label = new Label(0,39,description,wcf_description);
+				wcf_description.setWrap(true);
+				Label desc_label = new Label(0,46,description,wcf_description);
 				sheet.addCell(desc_label);
 				
 				
@@ -379,6 +393,7 @@ public class AccountServiceImpl implements AccountService{
 		WritableCellFormat wcf_title = new WritableCellFormat(wf_title); // 单元格定义
 		wcf_title.setBackground(jxl.format.Colour.WHITE); // 设置单元格的背景颜色
 		wcf_title.setVerticalAlignment(jxl.format.VerticalAlignment.CENTRE);// 设置对齐方式，上下居中
+		wcf_title.setAlignment(jxl.format.Alignment.LEFT); // 设置对齐方式，左右居中
 		wcf_title.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN,jxl.format.Colour.BLACK); //设置边框
 	
 		return wcf_title;
@@ -386,7 +401,7 @@ public class AccountServiceImpl implements AccountService{
 	
 	public WritableCellFormat getContentWritableCellFormat() throws Exception {
 		//5、 定义格式 字体 下划线 斜体 粗体 颜色(头部)
-		WritableFont wf_title = new WritableFont(WritableFont.ARIAL, 12,
+		WritableFont wf_title = new WritableFont(WritableFont.ARIAL, 11,
 				WritableFont.NO_BOLD, false, UnderlineStyle.NO_UNDERLINE,
 				jxl.format.Colour.BLACK);
 		
