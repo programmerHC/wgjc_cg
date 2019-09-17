@@ -8,6 +8,8 @@ public class UserRole {
 	private String uuid;
 	private String userId;
 	private String roleId;
+	//isDefault 0代表该用户默认登录角色，1代表非该员工默认角色
+	private int isDefault;
 	
 	public String getUuid() {
 		return uuid;
@@ -26,5 +28,11 @@ public class UserRole {
 	}
 	public void setRoleId(String roleId) {
 		this.roleId = roleId;
+	}
+	public int getIsDefault() {
+		return isDefault;
+	}
+	public void setIsDefault(int isDefault) {
+		this.isDefault = isDefault;
 	}
 }
